@@ -3,7 +3,7 @@ import Message from './Message'
 import ListGroup from './components/ListGroup'
 
 function App() {
-  
+
   let cities = [
     'San Salvador',
     'San Miguel',
@@ -12,10 +12,12 @@ function App() {
     'San Francisco'
   ]
 
+  const handleSelectItem = (city: string) => console.log(city)
+
   return (
     <div className="App">
       <Message />
-      <ListGroup cities={cities} heading='Cities' />
+      <ListGroup cities={cities} heading='Cities' onSelectItem={handleSelectItem} />
     </div>
   )
 }
