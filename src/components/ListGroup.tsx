@@ -1,25 +1,33 @@
-import { MouseEvent } from "react"
-
-let cities = [
-  'San Salvador',
-  'San Miguel',
-  'Santa Ana',
-  'San Antonio',
-  'San Francisco'
-]
+import { useState } from "react"
 
 const ListGroup = () => {
+  const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const handleClick = (evt: MouseEvent) => console.log(evt.target)
+  let cities = [
+    'San Salvador',
+    'San Miguel',
+    'Santa Ana',
+    'San Antonio',
+    'San Francisco'
+  ]
 
   return (
     <>
       <h1>🕺 Cities 🏄‍♂️</h1>
       {cities.length === 0 && <p>No Cities found</p>}
       <ul className="list-group">
-        {cities.map(city => <li key={city} className="list-group-item" onClick={handleClick}>
-          {city}
-        </li>)}
+        {cities.map((city, index) => (
+          <li
+            key={city}
+            className={
+              selectedIndex === index
+                ? 'list-group-item active'
+                : 'list-group-item'
+            }
+            onClick={() => setSelectedIndex(index)}>
+            {city}
+          </li>
+        ))}
       </ul>
     </>
   )
@@ -35,9 +43,10 @@ export default ListGroup
       - We get Auto-Completion
       - We get type safety
       - it is easier to refactor or restructure our code 
-      
+
   ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+  - To tell React that the component will have data or a state that might change over time, useState is needed 
 
 
 */
