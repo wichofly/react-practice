@@ -25,7 +25,9 @@ function App() {
         <h1>Hello <span>Sol</span> ✈️ </h1>
       </Alert>
 
-      <Button text='Funny 🚀' />
+      <Button color='primary' onClick={() => console.log('Hola')}>Wake me Up</Button>
+      <Button color='dark' onClick={() => console.log('Hola')}>Take me Home</Button>
+      <Button onClick={() => console.log('Hola')}>Eat Pupusas</Button>
     </div>
   )
 }
