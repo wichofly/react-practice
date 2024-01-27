@@ -2,6 +2,7 @@ import './App.css'
 // import Message from './Message'
 // import ListGroup from './components/ListGroup'
 import Alert from './components/Alert'
+import Button from './components/Button'
 
 function App() {
 
@@ -23,6 +24,8 @@ function App() {
       <Alert>
         <h1>Hello <span>Sol</span> ✈️ </h1>
       </Alert>
+
+      <Button text='Funny 🚀' />
     </div>
   )
 }
