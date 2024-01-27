@@ -1,13 +1,21 @@
+const cities = [
+  'San Salvador',
+  'San Miguel',
+  'Santa Ana',
+  'San Antonio',
+  'San Francisco'
+]
 
 const ListGroup = () => {
   return (
-    <ul className="list-group">
-      <li className="list-group-item">An item</li>
-      <li className="list-group-item">A second item</li>
-      <li className="list-group-item">A third item</li>
-      <li className="list-group-item">A fourth item</li>
-      <li className="list-group-item">And a fifth one</li>
-    </ul>
+    <>
+      <h1>🕺 Cities 🏄‍♂️</h1>
+      <ul className="list-group">
+        {cities.map(city => <li key={city}>
+          {city}
+        </li>)}
+      </ul>
+    </>
   )
 }
 
