@@ -19,7 +19,11 @@ const Like = ({ onClick }: Props) => {
 
   return (
     <>
-      {love ? <FaHeart color='crimson' fontSize='3em' onClick={toggle} /> : <CiHeart color='crimson' fontSize='3em' onClick={toggle} />}
+      {love ? (
+        <FaHeart color='crimson' fontSize='3em' onClick={toggle} />
+      ) : (
+        <CiHeart color='crimson' fontSize='3em' onClick={toggle} />
+      )}
     </>
   )
 
