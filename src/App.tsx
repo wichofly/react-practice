@@ -3,7 +3,7 @@ import './App.css'
 // import Message from './Message'
 // import ListGroup from './components/ListGroup'
 import Alert from './components/Alert'
-import Button from './components/Button'
+import Button from './components/Button/Button'
 
 function App() {
   const [alertVisible, setAlertVisible] = useState(false)
@@ -29,7 +29,7 @@ function App() {
           <h1>Hello <span>Sol</span> ✈️ </h1>
         </Alert>
       }
-      
+
       <Button color='primary' onClick={() => setAlertVisible(true)}>Wake me Up</Button>
       <Button onClick={() => setAlertVisible(true)}>Eat Pupusas</Button>
     </div >
