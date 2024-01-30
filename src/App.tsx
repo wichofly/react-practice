@@ -1,40 +1,26 @@
 import { useState } from 'react'
 import './App.css'
-// import Message from './Message'
-// import ListGroup from './components/ListGroup'
-import Alert from './components/Alert'
-import Button from './components/Button/Button'
-import Like from './components/Like/Like'
 
 function App() {
-  const [alertVisible, setAlertVisible] = useState(false)
+  const [customer, setCustomer] = useState({
+    name: 'Steve',
+    address: {
+      city: 'Jerusalem',
+      zipCode: 99111
+    }
+  })
 
-  // let cities = [
-  //   'San Salvador',
-  //   'San Miguel',
-  //   'Santa Ana',
-  //   'San Antonio',
-  //   'San Francisco'
-  // ]
-
-  // const handleSelectItem = (city: string) => console.log(city)
+  // Important to to use ternary operator to copy the Object.
+  const handleClick = () => {
+    setCustomer({
+      ...customer,
+      address: { ...customer.address, zipCode: 99222 }
+    })
+  }
 
   return (
     <div className="App">
-      {/* <Message />
-      <ListGroup cities={cities} heading='Cities' onSelectItem={handleSelectItem} /> */}
-
-      {
-        alertVisible &&
-        <Alert onClose={() => setAlertVisible(false)}>
-          <h1>Hello <span>Sol</span> ✈️ </h1>
-        </Alert>
-      }
-
-      <Button color='primary' onClick={() => setAlertVisible(true)}>Wake me Up</Button>
-      <Button onClick={() => setAlertVisible(true)}>Eat Pupusas</Button>
-
-      <Like onClick={() => console.log('Hi')} />
+      <button onClick={handleClick}>Touch me</button>
     </div >
   )
 }
