@@ -13,7 +13,7 @@ function App() {
   // Important to to use ternary operator to copy the Object.
   const handleClick = () => {
     setCustomer({
-      ...customer,
+      ...customer, // spread operator 
       address: { ...customer.address, zipCode: 99222 }
     })
   }
