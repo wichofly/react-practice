@@ -1,21 +1,33 @@
-import { FormEvent } from "react"
+import { FormEvent, useRef } from "react"
+import { parse } from "uuid"
 
 const Form = () => {
+  const nameRef = useRef<HTMLInputElement>(null)
+  const ageRef = useRef<HTMLInputElement>(null)
+  const person = { name: '', age: 0 }
+
 
   const handleOnSubmit = (evt: FormEvent) => {
     evt.preventDefault()
-    console.log('Submitted')
+
+    if (nameRef.current !== null)
+      person.name = nameRef.current.value
+
+    if (ageRef.current !== null)
+      person.age = parseInt(ageRef.current.value) // parseInt() convert a string to number
+
+    console.log(person);
   }
 
   return (
     <form onSubmit={handleOnSubmit}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Name</label>
-        <input id="name" type="text" className="form-control" />
+        <input ref={nameRef} id="name" type="text" className="form-control" />
       </div>
       <div className="mb-3">
         <label htmlFor="age" className="form-label">Age</label>
-        <input id="age" type="number" className="form-control" />
+        <input ref={ageRef} id="age" type="number" className="form-control" />
       </div>
       <button className="btn btn-primary" type="submit">Submit</button>
     </form>
