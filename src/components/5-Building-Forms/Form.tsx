@@ -1,33 +1,41 @@
-import { FormEvent, useRef } from "react"
+import { FormEvent, useRef, useState } from "react"
 import { parse } from "uuid"
 
 const Form = () => {
-  const nameRef = useRef<HTMLInputElement>(null)
-  const ageRef = useRef<HTMLInputElement>(null)
-  const person = { name: '', age: 0 }
+  const [person, setPerson] = useState({
+    name: '',
+    age: ''
+  })
 
-
-  const handleOnSubmit = (evt: FormEvent) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault()
-
-    if (nameRef.current !== null)
-      person.name = nameRef.current.value
-
-    if (ageRef.current !== null)
-      person.age = parseInt(ageRef.current.value) // parseInt() convert a string to number
 
     console.log(person);
   }
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleSubmit} >
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Name</label>
-        <input ref={nameRef} id="name" type="text" className="form-control" />
+        <input onChange={(evt) =>
+          setPerson({ ...person, name: evt.target.value })
+        }
+          value={person.name}
+          id="name"
+          type="text"
+          className="form-control"
+        />
       </div>
       <div className="mb-3">
         <label htmlFor="age" className="form-label">Age</label>
-        <input ref={ageRef} id="age" type="number" className="form-control" />
+        <input onChange={(evt) =>
+          setPerson({ ...person, age: parseInt(evt.target.value) })
+        }
+          value={person.age}
+          id="age"
+          type="number"
+          className="form-control"
+        />
       </div>
       <button className="btn btn-primary" type="submit">Submit</button>
     </form>
