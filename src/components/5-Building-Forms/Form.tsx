@@ -1,7 +1,14 @@
+import { FormEvent } from "react"
 
 const Form = () => {
+
+  const handleOnSubmit = (evt: FormEvent) => {
+    evt.preventDefault()
+    console.log('Submitted')
+  }
+
   return (
-    <form>
+    <form onSubmit={handleOnSubmit}>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Name</label>
         <input id="name" type="text" className="form-control" />
