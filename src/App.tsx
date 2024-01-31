@@ -1,30 +1,27 @@
 import { useState } from 'react'
+import { v4 as uuid } from 'uuid'
+
 import './App.css'
-import Navbar from './components/Navbar'
-import Cart from './components/Cart'
+
 
 function App() {
-  const [cartItems, setCartItems] = useState(['Product1', 'Product2'])
-  // const [customer, setCustomer] = useState({
-  //   name: 'Steve',
-  //   address: {
-  //     city: 'Jerusalem',
-  //     zipCode: 99111
-  //   }
-  // })
+  const [game, setGame] = useState({
+    id: uuid(),
+    player: {
+      name: 'Tobias'
+    }
+  })
 
-  // // Important to to use spread operator to copy the Object.
-  // const handleClick = () => {
-  //   setCustomer({
-  //     ...customer, // spread operator 
-  //     address: { ...customer.address, zipCode: 99222 }
-  //   })
-  // }
+  const handleClick = () => {
+    setGame({
+      ...game,
+      player: { ...game.player, name: 'Moises' }
+    })
+  }
 
   return (
     <div className="App">
-      <Navbar cartItemsCount={cartItems.length} />
-      <Cart cartItems={cartItems} onClear={() => setCartItems([])} />
+      <button onClick={handleClick}>New Gamer</button>
     </div >
   )
 }
