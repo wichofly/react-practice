@@ -1,40 +1,37 @@
 import { useState } from 'react'
+import { v4 as uuid } from 'uuid'
+
 import './App.css'
-// import Message from './Message'
-// import ListGroup from './components/ListGroup'
-import Alert from './components/Alert'
-import Button from './components/Button/Button'
-import Like from './components/Like/Like'
+import ExtendableText from './components/4-Managing-Component-State/ExtendableText'
+
 
 function App() {
-  const [alertVisible, setAlertVisible] = useState(false)
+  // const [game, setGame] = useState({
+  //   id: uuid(),
+  //   player: {
+  //     name: 'Tobias'
+  //   }
+  // })
 
-  // let cities = [
-  //   'San Salvador',
-  //   'San Miguel',
-  //   'Santa Ana',
-  //   'San Antonio',
-  //   'San Francisco'
-  // ]
-
-  // const handleSelectItem = (city: string) => console.log(city)
+  // const handleClick = () => {
+  //   setGame({
+  //     ...game,
+  //     player: { ...game.player, name: 'Moises' }
+  //   })
+  // }
 
   return (
     <div className="App">
-      {/* <Message />
-      <ListGroup cities={cities} heading='Cities' onSelectItem={handleSelectItem} /> */}
+      <ExtendableText >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam distinctio id nulla sint,
+        nemo quos? Quo animi, laudantium similique necessitatibus fugit pariatur aut ea! Quod eligendi, obcaecati, quo assumenda ex provident impedit totam soluta corrupti quia repellendus? Officia tenetur molestiae,
+        quam voluptatem a quibusdam non maiores fugit aliquid nesciunt aliquam eum odit blanditiis aut atque sapiente, nobis nihil porro voluptatibus dolores. Aliquid minima tenetur, laudantium saepe laboriosam illum facilis modi accusantium,
+        maxime iure adipisci vel sed quam eligendi tempore similique ducimus odio? Soluta ipsam fuga molestiae voluptatibus velit quae possimus at aliquid, voluptates consectetur vel tempore veniam voluptatum debitis provident.
+      </ExtendableText>
 
-      {
-        alertVisible &&
-        <Alert onClose={() => setAlertVisible(false)}>
-          <h1>Hello <span>Sol</span> ✈️ </h1>
-        </Alert>
-      }
-
-      <Button color='primary' onClick={() => setAlertVisible(true)}>Wake me Up</Button>
-      <Button onClick={() => setAlertVisible(true)}>Eat Pupusas</Button>
-
-      <Like onClick={() => console.log('Hi')} />
+      <ExtendableText >
+        Hello Chasse 
+      </ExtendableText>
     </div >
   )
 }
