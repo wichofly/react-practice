@@ -1,26 +1,18 @@
 import { FormEvent, useRef, useState } from "react"
 import { parse } from "uuid"
+import { FieldValue, FieldValues, useForm } from 'react-hook-form'
 
 const Form = () => {
-  const [person, setPerson] = useState({
-    name: '',
-    age: ''
-  })
+  const { register, handleSubmit } = useForm()
 
-  const handleSubmit = (evt: FormEvent) => {
-    evt.preventDefault()
-
-    console.log(person);
-  }
+  const onSubmit = (data: FieldValues) => console.log(data);
 
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit(onSubmit)} >
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Name</label>
-        <input onChange={(evt) =>
-          setPerson({ ...person, name: evt.target.value })
-        }
-          value={person.name}
+        <input
+          {...register('name')}
           id="name"
           type="text"
           className="form-control"
@@ -28,10 +20,8 @@ const Form = () => {
       </div>
       <div className="mb-3">
         <label htmlFor="age" className="form-label">Age</label>
-        <input onChange={(evt) =>
-          setPerson({ ...person, age: parseInt(evt.target.value) })
-        }
-          value={person.age}
+        <input
+          {...register('age')}
           id="age"
           type="number"
           className="form-control"
@@ -47,4 +37,8 @@ export default Form
 /**
  * This website is so useful as well:
  * https://www.react-hook-form.com/get-started/
- */
+ * 
+ * react-hook-form
+    We can use the popular library, it quickly build forms with less code.
+
+*/
