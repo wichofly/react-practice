@@ -6,6 +6,8 @@ import ExpenseList from './components/5-Building-Forms/expense-tracker/component
 import ExpenseFilter from './components/5-Building-Forms/expense-tracker/components/ExpenseFilter'
 import ExpenseForm from './components/5-Building-Forms/expense-tracker/components/ExpenseForm'
 
+import categories from './components/5-Building-Forms/expense-tracker/categories'
+
 const neededThings = [
   {
     id: uuid(),
@@ -34,8 +36,6 @@ const neededThings = [
 ]
 
 // console.log(neededThings);
-
-export const categories = ['Groceries', 'Utilities', 'Entertainment'] as const
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -75,6 +75,4 @@ export default App
 /**
  * "id: any" is used because I am using uuid(), it is mixed with numbers and strings.
  * 
- * "as const": TypeScript is used to assert that a value is constant. 
-    This means that the value cannot be reassigned or modified. 
  */

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { categories } from "../../../../App"
+import categories from '../categories'
 
 const schema = z.object({
   description: z.string().min(5).max(100),
