@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid'
 import './App.css'
 import ExpenseList from './components/5-Building-Forms/expense-tracker/components/ExpenseList'
 import ExpenseFilter from './components/5-Building-Forms/expense-tracker/components/ExpenseFilter'
+import ExpenseForm from './components/5-Building-Forms/expense-tracker/components/ExpenseForm'
 
 const neededThings = [
   {
@@ -32,7 +33,10 @@ const neededThings = [
   }
 ]
 
-console.log(neededThings);
+// console.log(neededThings);
+
+export const categories = ['Groceries', 'Utilities', 'Entertainment']
+
 
 
 function App() {
@@ -59,6 +63,7 @@ function App() {
         //   setExpenses(expenses.filter(exp => exp.id !== id))}
         onDelete={handleDelete}
       />
+      <ExpenseForm />
     </div >
   )
 }
