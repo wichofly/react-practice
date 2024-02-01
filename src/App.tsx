@@ -54,16 +54,20 @@ function App() {
 
   return (
     <div className="App">
+      <div className="mb-5">
+        <ExpenseForm />
+      </div>
+
       <div className='mb-3'>
         <ExpenseFilter onSelectCategory={category => setSelectedCategory(category)} />
       </div>
+      
       <ExpenseList
         expenses={visibleExpenses}
         // onDelete={(id) =>
         //   setExpenses(expenses.filter(exp => exp.id !== id))}
         onDelete={handleDelete}
       />
-      <ExpenseForm />
     </div >
   )
 }

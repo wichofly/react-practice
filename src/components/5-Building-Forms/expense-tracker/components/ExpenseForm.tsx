@@ -24,6 +24,7 @@ const ExpenseForm = () => {
           )}
         </select>
       </div>
+      <button className="btn btn-primary">Submit</button>
     </form>
   )
 }
