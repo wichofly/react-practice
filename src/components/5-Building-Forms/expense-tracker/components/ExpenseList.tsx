@@ -22,20 +22,21 @@ const ExpenseList = ({ expenses, onDelete }: Prop) => {
         </tr>
       </thead>
       <tbody>
-        {expenses.map((expense) =>
-          <tr key={expense.id}>
-            <td>{expense.description}</td>
-            <td>{expense.amount}</td>
-            <td>{expense.category}</td>
+        {expenses.map(({ id, description, amount, category }) =>
+          <tr key={id}>
+            <td>{description}</td>
+            <td>{amount}</td>
+            <td>{category}</td>
             <td>
               <button
                 className="btn btn-outline-danger"
-                onClick={() => onDelete(expense.id)}
+                onClick={() => onDelete(id)}
               >
                 Delete
               </button>
             </td>
-          </tr>)}
+          </tr>
+        )}
       </tbody>
       <tfoot>
         <tr>
@@ -50,3 +51,8 @@ const ExpenseList = ({ expenses, onDelete }: Prop) => {
 }
 
 export default ExpenseList
+
+/**
+ * destructuring assignment  { id, description, amount, category } = expense  
+    Is done within the  map  function's callback. It extracts the specific properties from each  expense  object in the  expenses  array.
+ */
