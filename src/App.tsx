@@ -3,13 +3,14 @@ import { v4 as uuid } from 'uuid'
 
 import './App.css'
 import ExpenseList from './components/5-Building-Forms/expense-tracker/components/ExpenseList'
+import ExpenseFilter from './components/5-Building-Forms/expense-tracker/components/ExpenseFilter'
 
 const neededThings = [
   {
     id: uuid(),
     description: 'Potato',
     amount: 2,
-    category: 'Food'
+    category: 'Groceries'
   },
   {
     id: uuid(),
@@ -21,13 +22,13 @@ const neededThings = [
     id: uuid(),
     description: 'Shoes',
     amount: 2,
-    category: 'Sport'
+    category: 'Entertainment'
   },
   {
     id: uuid(),
     description: 'Shirt',
     amount: 4,
-    category: 'Food'
+    category: 'Entertainment'
   }
 ]
 
@@ -35,16 +36,25 @@ console.log(neededThings);
 
 
 function App() {
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [expenses, setExpenses] = useState(neededThings)
 
   if (expenses.length === 0) return null // It Does not show the table when there is not description.
 
-  const handleDelete = (id: any) => setExpenses(expenses.filter(exp => exp.id !== id))
+  const visibleExpenses = selectedCategory
+    ? expenses.filter(exp => exp.category === selectedCategory)
+    : expenses
+
+  const handleDelete = (id: any) =>
+    setExpenses(expenses.filter(exp => exp.id !== id))
 
   return (
     <div className="App">
+      <div className='mb-3'>
+        <ExpenseFilter onSelectCategory={category => setSelectedCategory(category)} />
+      </div>
       <ExpenseList
-        expenses={expenses}
+        expenses={visibleExpenses}
         // onDelete={(id) =>
         //   setExpenses(expenses.filter(exp => exp.id !== id))}
         onDelete={handleDelete}
