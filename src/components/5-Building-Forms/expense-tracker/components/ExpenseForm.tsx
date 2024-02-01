@@ -4,6 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import categories from '../categories'
 
+interface Prop {
+  onSubmit: (data: ExpenseFormData) => void
+}
+
 const schema = z.object({
   description: z.string().min(5, { message: 'Description should be at least 5 characters' }).max(100),
   amount: z
@@ -17,15 +21,19 @@ const schema = z.object({
 
 type ExpenseFormData = z.infer<typeof schema>
 
-const ExpenseForm = () => {
+const ExpenseForm = ({ onSubmit }: Prop) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid }
   } = useForm<ExpenseFormData>({ resolver: zodResolver(schema) })
 
   return (
-    <form onSubmit={handleSubmit(data => console.log(data))}>
+    <form onSubmit={handleSubmit(data => {
+      onSubmit(data)
+      reset()
+    })}>
       <div className="mb-3">
         <label htmlFor="description" className="form-label">
           Description

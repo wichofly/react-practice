@@ -43,6 +43,9 @@ function App() {
 
   if (expenses.length === 0) return null // It Does not show the table when there is not description.
 
+  // const handleSubmit = (expense: { id: any; description: string; amount: number; category: string }) =>
+  //   setExpenses([...expenses, { ...expense, id: uuid() }])
+
   const visibleExpenses = selectedCategory
     ? expenses.filter(exp => exp.category === selectedCategory)
     : expenses
@@ -53,7 +56,12 @@ function App() {
   return (
     <div className="App">
       <div className="mb-5">
-        <ExpenseForm />
+        <ExpenseForm onSubmit={expense => setExpenses([
+          ...expenses,
+          {
+            ...expense, id: uuid()
+          }])}
+        />
       </div>
 
       <div className='mb-3'>
