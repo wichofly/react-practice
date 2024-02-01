@@ -35,9 +35,7 @@ const neededThings = [
 
 // console.log(neededThings);
 
-export const categories = ['Groceries', 'Utilities', 'Entertainment']
-
-
+export const categories = ['Groceries', 'Utilities', 'Entertainment'] as const
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -61,7 +59,7 @@ function App() {
       <div className='mb-3'>
         <ExpenseFilter onSelectCategory={category => setSelectedCategory(category)} />
       </div>
-      
+
       <ExpenseList
         expenses={visibleExpenses}
         // onDelete={(id) =>
@@ -76,4 +74,7 @@ export default App
 
 /**
  * "id: any" is used because I am using uuid(), it is mixed with numbers and strings.
+ * 
+ * "as const": TypeScript is used to assert that a value is constant. 
+    This means that the value cannot be reassigned or modified. 
  */
