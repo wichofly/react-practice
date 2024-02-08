@@ -31,3 +31,8 @@ const Like = ({ onClick }: Props) => {
 
 export default Like
 
+/*
+  - If  love  is  true , the  FaHeart  icon is rendered, otherwise the  CiHeart  icon is rendered. 
+ 
+  - The ternary operator is a concise way to write an  if-else  statement, and it can be used to improve the readability of your code.
+*/

@@ -56,9 +56,8 @@ function App() {
   return (
     <div className="App">
       <div className="mb-5">
-        <ExpenseForm onSubmit={expense => setExpenses([
-          ...expenses,
-          {
+        <ExpenseForm onSubmit={expense =>
+          setExpenses([...expenses, {
             ...expense, id: uuid()
           }])}
         />
