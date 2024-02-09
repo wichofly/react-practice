@@ -24,4 +24,7 @@ export default ExpenseFilter
     is to capture the selected value from the dropdown menu and pass it to the  onSelectCategory  function. 
     This allows you to perform further actions or update the state based on the selected value.
     Always is used in "onChange"
+
+    - When to use "evt.target.value":
+      You typically use "evt.target.value" in event handlers, such as "onclick","onchange" or "onsubmit," to capture and process the user's input.
  */

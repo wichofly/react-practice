@@ -46,6 +46,7 @@ function App() {
   // const handleSubmit = (expense: { id: any; description: string; amount: number; category: string }) =>
   //   setExpenses([...expenses, { ...expense, id: uuid() }])
 
+  // Instead of passing all the expenses to the ExpenseList component is used the filter
   const visibleExpenses = selectedCategory
     ? expenses.filter(exp => exp.category === selectedCategory)
     : expenses
