@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, CanceledError } from 'axios'
 
 import ProductList from './components/6-Connecting-Backend/ProductList'
 
@@ -18,12 +18,17 @@ function App() {
   // After only first render
   useEffect(() => {
     const fetchDataUsers = async () => {
+      const controller = new AbortController()
+
       try {
-        const res = await axios(apiUsers)
+        const res = await axios(apiUsers, { signal: controller.signal })
         setUsers(res.data)
       } catch (err) {
+        if (err instanceof CanceledError) return
         setError((err as AxiosError).message)
       }
+
+      return () => controller.abort()
     }
 
     fetchDataUsers()
@@ -63,5 +68,30 @@ export default App
     catch (err) {
       setError((err as AxiosError).message)
     }
+------------------------------------------------------------------------------------------------------------------------------------
 
+**1. AbortController**: 
+   -  const controller = new AbortController() : 
+   This line creates a new  AbortController  object. It's used to cancel HTTP requests if needed.
+
+**2. HTTP Request with Abort Signal**: 
+   -  { signal: controller.signal } : 
+   This option is passed to the HTTP request configuration. 
+   It associates the request with the  AbortController  signal. If the controller is aborted, the request will be canceled.
+
+**3. Handling Canceled Errors**: 
+   -  if (err instanceof CanceledError) return : 
+   This checks if the error is an instance of  CanceledError . 
+   If it is, it means the request was canceled and the function returns early, preventing further execution
+
+**4. Cleanup Function**: 
+   -  return () => controller.abort() : 
+   This is a cleanup function that's returned by the  useEffect  hook. 
+   When the component unmounts or the effect is cleaned up, this function will be called. 
+   It calls the  abort()  method on the  AbortController , which cancels any pending requests. 
+
+In summary, this code uses an  AbortController  to cancel HTTP requests if needed, 
+handles canceled errors, and ensures proper cleanup when the component unmounts.
+
+-------------------------------------------------------------------------------------------------------------------------------------
 */
