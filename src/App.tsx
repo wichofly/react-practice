@@ -10,6 +10,7 @@ interface User {
 
 function App() {
   const [users, setUsers] = useState<User[]>([])
+  const [error, setError] = useState('')
   // const [category, setCategory] = useState('')
 
   const apiUsers = 'https://jsonplaceholder.typicode.com/users'
@@ -18,6 +19,7 @@ function App() {
   useEffect(() => {
     axios(apiUsers)
       .then(res => setUsers(res.data))
+      .catch(err => setError(err.message))
   }, [])
 
   return (
@@ -29,6 +31,8 @@ function App() {
       </select>
       <ProductList category={category} /> */}
 
+      {error && <p className='text-danger'>{error}</p>}
+      
       <ul>
         {users.map(user =>
           <li key={user.id}>{user.name}</li>
