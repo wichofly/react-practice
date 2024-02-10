@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios, { AxiosError, CanceledError } from 'axios'
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { MdOutlineUpdate } from "react-icons/md";
 
 import ProductList from './components/6-Connecting-Backend/ProductList'
 
@@ -73,6 +74,20 @@ function App() {
     }
   }
 
+  const updateUser = async (user: User) => {
+    const originalUsers = [...users]
+    const updatedUser = { ...user, name: `${user.name} 🐱 Well done!` }
+    try {
+      setUsers(users.map(u => u.id === user.id ? updatedUser : u))
+
+      await axios.patch(`${apiUsers}/${user.id}`, updatedUser)
+
+    } catch (err) {
+      setError((err as AxiosError).message)
+      setUsers(originalUsers)
+    }
+  }
+
   return (
     <div >
       {/* <select className="form-select" onChange={(evt) => setCategory(evt.target.value)}>
@@ -90,9 +105,17 @@ function App() {
         {users.map(user =>
           <li key={user.id} className='list-group-item d-flex justify-content-between'>
             {user.name}
-            <button className='btn btn-danger btn-sm' onClick={() => deleteUser(user)}>
-              <RiDeleteBin5Line fontSize='1.3rem' />
-            </button>
+            <div>
+              <button className='btn btn-info btn-sm mx-2'
+                onClick={() => updateUser(user)}>
+                <MdOutlineUpdate fontSize='1.3rem' />
+              </button>
+
+              <button className='btn btn-danger btn-sm'
+                onClick={() => deleteUser(user)}>
+                <RiDeleteBin5Line fontSize='1.3rem' />
+              </button>
+            </div>
           </li>
         )}
       </ul>
