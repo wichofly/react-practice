@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
 import apiClient, { AxiosError, CanceledError } from '../services/api-client';
 
+interface User {
+  name: string;
+  id: number;
+}
+
 const useUsers = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   // const [category, setCategory] = useState('')
