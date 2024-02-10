@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import axios, { AxiosError, CanceledError } from 'axios'
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdOutlineUpdate } from "react-icons/md";
+import apiClient, { AxiosError, CanceledError } from './components/6-Connecting-Backend/services/api-client';
 
 import ProductList from './components/6-Connecting-Backend/ProductList'
 
@@ -16,15 +16,13 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   // const [category, setCategory] = useState('')
 
-  const apiUsers = 'https://jsonplaceholder.typicode.com/users'
-
   // After only first render
   useEffect(() => {
     const fetchDataUsers = async () => {
       const controller = new AbortController()
 
       try {
-        const res = await axios(apiUsers, { signal: controller.signal })
+        const res = await apiClient('/users', { signal: controller.signal })
         setUsers(res.data)
         setIsLoading(false)
       } catch (err) {
@@ -51,7 +49,7 @@ function App() {
     const originalUsers = [...users]
     setUsers(users.filter(u => u.id !== user.id))
 
-    axios.delete(`${apiUsers}/${user.id}`)
+    apiClient.delete('/users' + '/users.id')
       .catch(err => {
         setError(err.message)
         setUsers(originalUsers)
@@ -66,7 +64,7 @@ function App() {
       setUsers([newUser, ...users])
 
       // It is needed to call the server to save the changes 
-      const { data: savedUser } = await axios.post(`${apiUsers}`, newUser)
+      const { data: savedUser } = await apiClient.post('/users', newUser)
       setUsers([savedUser, ...users])
     } catch (err) {
       setError((err as AxiosError).message)
@@ -80,7 +78,7 @@ function App() {
     try {
       setUsers(users.map(u => u.id === user.id ? updatedUser : u))
 
-      await axios.patch(`${apiUsers}/${user.id}`, updatedUser)
+      await apiClient.patch('/users' + '/users.id', updatedUser)
 
     } catch (err) {
       setError((err as AxiosError).message)
