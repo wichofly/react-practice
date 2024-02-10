@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdOutlineUpdate } from "react-icons/md";
-import apiClient, { AxiosError, CanceledError } from './components/6-Connecting-Backend/services/api-client';
+import apiClient, { AxiosError } from './components/6-Connecting-Backend/services/api-client';
 
 import ProductList from './components/6-Connecting-Backend/ProductList'
+import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
 
 interface User {
   id: number
@@ -11,35 +11,7 @@ interface User {
 }
 
 function App() {
-  const [users, setUsers] = useState<User[]>([])
-  const [error, setError] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  // const [category, setCategory] = useState('')
-
-  // After only first render
-  useEffect(() => {
-    const fetchDataUsers = async () => {
-      const controller = new AbortController()
-
-      try {
-        const res = await apiClient('/users', { signal: controller.signal })
-        setUsers(res.data)
-        setIsLoading(false)
-      } catch (err) {
-        if (err instanceof CanceledError) return
-        setError((err as AxiosError).message)
-        setIsLoading(false)
-      }
-
-      return () => controller.abort()
-    }
-
-    fetchDataUsers()
-
-    // axios(apiUsers)
-    //   .then(res => setUsers(res.data))
-    //   .catch(err => setError(err.message))
-  }, [])
+  const { users, error, isLoading, setUsers, setError } = useUsers()
 
   // if (isLoading) {
   //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;
