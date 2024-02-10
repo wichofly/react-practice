@@ -11,6 +11,7 @@ interface User {
 function App() {
   const [users, setUsers] = useState<User[]>([])
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   // const [category, setCategory] = useState('')
 
   const apiUsers = 'https://jsonplaceholder.typicode.com/users'
@@ -23,9 +24,11 @@ function App() {
       try {
         const res = await axios(apiUsers, { signal: controller.signal })
         setUsers(res.data)
+        setIsLoading(false)
       } catch (err) {
         if (err instanceof CanceledError) return
         setError((err as AxiosError).message)
+        setIsLoading(false)
       }
 
       return () => controller.abort()
@@ -38,6 +41,10 @@ function App() {
     //   .catch(err => setError(err.message))
   }, [])
 
+  // if (isLoading) {
+  //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;
+  // }
+
   return (
     <div >
       {/* <select className="form-select" onChange={(evt) => setCategory(evt.target.value)}>
@@ -48,6 +55,7 @@ function App() {
       <ProductList category={category} /> */}
 
       {error && <p className='text-danger'>{error}</p>}
+      {isLoading && <p className='spinner-border'></p>}
 
       <ul>
         {users.map(user =>
