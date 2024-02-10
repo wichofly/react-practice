@@ -58,6 +58,21 @@ function App() {
   }
 
 
+  const addUser = async () => {
+    const originalUsers = [...users]
+    try {
+      const newUser = { id: 11, name: 'Josue' }
+      setUsers([newUser, ...users])
+
+      // It is needed to call the server to save the changes 
+      const { data: savedUser } = await axios.post(`${apiUsers}`, newUser)
+      setUsers([savedUser, ...users])
+    } catch (err) {
+      setError((err as AxiosError).message)
+      setUsers(originalUsers)
+    }
+  }
+
   return (
     <div >
       {/* <select className="form-select" onChange={(evt) => setCategory(evt.target.value)}>
@@ -70,6 +85,7 @@ function App() {
       {error && <p className='text-danger'>{error}</p>}
       {isLoading && <p className='spinner-border'></p>}
 
+      <button className='btn btn-primary mb-3' onClick={addUser}>Add</button>
       <ul className='list-group'>
         {users.map(user =>
           <li key={user.id} className='list-group-item d-flex justify-content-between'>
@@ -120,4 +136,19 @@ In summary, this code uses an  AbortController  to cancel HTTP requests if neede
 handles canceled errors, and ensures proper cleanup when the component unmounts.
 
 -------------------------------------------------------------------------------------------------------------------------------------
+
+  NOT USING ASYNC/AWAIT
+  ----------------------->
+  const addUser = () => {
+    const originalUsers = [...users]
+    const newUser = { id: 11, name: 'Josue' }
+    setUsers([newUser, ...users])
+
+    axios.post(`${apiUsers}`, newUser)
+      .then(res => setUsers([res.data, ...users]))
+      .catch(err => {
+        setError(err.message)
+        setUsers(originalUsers)
+      })
+  }
 */
