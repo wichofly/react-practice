@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios, { AxiosError, CanceledError } from 'axios'
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 import ProductList from './components/6-Connecting-Backend/ProductList'
 
@@ -45,6 +46,18 @@ function App() {
   //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;
   // }
 
+  const deleteUser = (user: User) => {
+    const originalUsers = [...users]
+    setUsers(users.filter(u => u.id !== user.id))
+
+    axios.delete(`${apiUsers}/${user.id}`)
+      .catch(err => {
+        setError(err.message)
+        setUsers(originalUsers)
+      })
+  }
+
+
   return (
     <div >
       {/* <select className="form-select" onChange={(evt) => setCategory(evt.target.value)}>
@@ -57,9 +70,14 @@ function App() {
       {error && <p className='text-danger'>{error}</p>}
       {isLoading && <p className='spinner-border'></p>}
 
-      <ul>
+      <ul className='list-group'>
         {users.map(user =>
-          <li key={user.id}>{user.name}</li>
+          <li key={user.id} className='list-group-item d-flex justify-content-between'>
+            {user.name}
+            <button className='btn btn-danger btn-sm' onClick={() => deleteUser(user)}>
+              <RiDeleteBin5Line fontSize='1.3rem' />
+            </button>
+          </li>
         )}
       </ul>
     </div >
