@@ -1,99 +1,128 @@
-import { RiDeleteBin5Line } from "react-icons/ri";
-import { MdOutlineUpdate } from "react-icons/md";
-import apiClient, { AxiosError } from './components/6-Connecting-Backend/services/api-client';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import { MdOutlineUpdate } from 'react-icons/md';
+import apiClient, {
+  AxiosError,
+} from './components/6-Connecting-Backend/services/api-client';
 
-import ProductList from './components/6-Connecting-Backend/ProductList'
+import ProductList from './components/6-Connecting-Backend/ProductList';
 import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
+import { useState } from 'react';
 
 interface User {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
+// Utility function to capitalize the first letter of each word
+const capitalizeWords = (str: string) => {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
 function App() {
-  const { users, error, isLoading, setUsers, setError } = useUsers()
+  const { users, error, isLoading, setUsers, setError } = useUsers();
+  const [newUserName, setNewUserName] = useState('');
 
   // if (isLoading) {
   //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;
   // }
 
   const deleteUser = (user: User) => {
-    const originalUsers = [...users]
-    setUsers(users.filter(u => u.id !== user.id))
+    const originalUsers = [...users];
+    setUsers(users.filter((u) => u.id !== user.id));
 
-    apiClient.delete('/users' + '/users.id')
-      .catch(err => {
-        setError(err.message)
-        setUsers(originalUsers)
-      })
-  }
-
+    apiClient.delete('/users' + '/users.id').catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
+  };
 
   const addUser = async () => {
-    const originalUsers = [...users]
-    try {
-      const newUser = { id: 11, name: 'Josue' }
-      setUsers([newUser, ...users])
+    if (!newUserName.trim()) return;
 
-      // It is needed to call the server to save the changes 
-      const { data: savedUser } = await apiClient.post('/users', newUser)
-      setUsers([savedUser, ...users])
+    const originalUsers = [...users];
+    try {
+      const formattedName = capitalizeWords(newUserName);
+      const newUser = { id: users.length + 1, name: formattedName };
+      setUsers([newUser, ...users]);
+
+      // It is needed to call the server to save the changes
+      const { data: savedUser } = await apiClient.post('/users', newUser);
+      setUsers([savedUser, ...users]);
+      setNewUserName(''); // Clear the input field after adding the user
     } catch (err) {
-      setError((err as AxiosError).message)
-      setUsers(originalUsers)
+      setError((err as AxiosError).message);
+      setUsers(originalUsers);
     }
-  }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      addUser();
+    }
+  };
 
   const updateUser = async (user: User) => {
-    const originalUsers = [...users]
-    const updatedUser = { ...user, name: `${user.name} 🐱 Well done!` }
+    const originalUsers = [...users];
+    const updatedUser = { ...user, name: `${user.name} 🐱 Well done!` };
     try {
-      setUsers(users.map(u => u.id === user.id ? updatedUser : u))
+      setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
 
-      await apiClient.patch('/users' + '/users.id', updatedUser)
-
+      await apiClient.patch('/users' + '/users.id', updatedUser);
     } catch (err) {
-      setError((err as AxiosError).message)
-      setUsers(originalUsers)
+      setError((err as AxiosError).message);
+      setUsers(originalUsers);
     }
-  }
+  };
 
   return (
-    <div >
-      {/* <select className="form-select" onChange={(evt) => setCategory(evt.target.value)}>
-        <option value=""></option>
-        <option value="Clothing">Clothing</option>
-        <option value="Household">Household</option>
-      </select>
-      <ProductList category={category} /> */}
+    <div>
+      {error && <p className="text-danger">{error}</p>}
+      {isLoading && <p className="spinner-border"></p>}
 
-      {error && <p className='text-danger'>{error}</p>}
-      {isLoading && <p className='spinner-border'></p>}
+      <div className="mb-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Add a new user"
+          value={newUserName}
+          onChange={(e) => setNewUserName(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
 
-      <button className='btn btn-primary mb-3' onClick={addUser}>Add</button>
-      <ul className='list-group'>
-        {users.map(user =>
-          <li key={user.id} className='list-group-item d-flex justify-content-between'>
+      <button className="btn btn-primary mb-3" onClick={addUser}>
+        Add
+      </button>
+      <ul className="list-group">
+        {users.map((user) => (
+          <li
+            key={user.id}
+            className="list-group-item d-flex justify-content-between"
+          >
             {user.name}
             <div>
-              <button className='btn btn-info btn-sm mx-2'
-                onClick={() => updateUser(user)}>
-                <MdOutlineUpdate fontSize='1.3rem' />
+              <button
+                className="btn btn-info btn-sm mx-2"
+                onClick={() => updateUser(user)}
+              >
+                <MdOutlineUpdate fontSize="1.3rem" />
               </button>
 
-              <button className='btn btn-danger btn-sm'
-                onClick={() => deleteUser(user)}>
-                <RiDeleteBin5Line fontSize='1.3rem' />
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => deleteUser(user)}
+              >
+                <RiDeleteBin5Line fontSize="1.3rem" />
               </button>
             </div>
           </li>
-        )}
+        ))}
       </ul>
-    </div >
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
 
 /*
  * A function is needed inside useEffect to use async and await.
