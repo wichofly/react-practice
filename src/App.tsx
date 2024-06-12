@@ -19,8 +19,15 @@ const capitalizeWords = (str: string) => {
 };
 
 function App() {
-  const { users, error, isLoading, setUsers, setError } = useUsers();
-  const [newUserName, setNewUserName] = useState('');
+  const {
+    users,
+    newUserName,
+    error,
+    isLoading,
+    setUsers,
+    setNewUserName,
+    setError,
+  } = useUsers();
 
   // if (isLoading) {
   //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;

@@ -8,6 +8,7 @@ interface User {
 
 const useUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [newUserName, setNewUserName] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   // const [category, setCategory] = useState('')
@@ -20,6 +21,7 @@ const useUsers = () => {
       try {
         const res = await apiClient('/users', { signal: controller.signal });
         setUsers(res.data);
+        setNewUserName('');
         setIsLoading(false);
       } catch (err) {
         if (err instanceof CanceledError) return;
@@ -37,7 +39,15 @@ const useUsers = () => {
     //   .catch(err => setError(err.message))
   }, []);
 
-  return { users, error, isLoading, setUsers, setError };
+  return {
+    users,
+    newUserName,
+    error,
+    isLoading,
+    setUsers,
+    setNewUserName,
+    setError,
+  };
 };
 
 export default useUsers;
