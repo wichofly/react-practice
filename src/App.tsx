@@ -5,7 +5,6 @@ import apiClient, {
 } from './components/6-Connecting-Backend/services/api-client';
 
 import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
-import { useState } from 'react';
 
 interface User {
   id: number;
