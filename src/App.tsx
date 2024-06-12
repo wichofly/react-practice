@@ -4,7 +4,6 @@ import apiClient, {
   AxiosError,
 } from './components/6-Connecting-Backend/services/api-client';
 
-import ProductList from './components/6-Connecting-Backend/ProductList';
 import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
 import { useState } from 'react';
 
