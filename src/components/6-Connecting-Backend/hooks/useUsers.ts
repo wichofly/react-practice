@@ -11,7 +11,6 @@ const useUsers = () => {
   const [newUserName, setNewUserName] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  // const [category, setCategory] = useState('')
 
   // After only first render
   useEffect(() => {
@@ -28,12 +27,10 @@ const useUsers = () => {
         setError((err as AxiosError).message);
         setIsLoading(false);
       }
-
       return () => controller.abort();
     };
-
     fetchDataUsers();
-
+        
     // axios(apiUsers)
     //   .then(res => setUsers(res.data))
     //   .catch(err => setError(err.message))

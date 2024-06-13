@@ -4,7 +4,6 @@ import apiClient, {
   AxiosError,
 } from './components/6-Connecting-Backend/services/api-client';
 import { v4 as uuidv4 } from 'uuid';
-
 import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
 
 interface User {
@@ -28,15 +27,10 @@ function App() {
     setError,
   } = useUsers();
 
-  // if (isLoading) {
-  //   return <h2 className='spinner-border'>Loading, wait a little bit!</h2>;
-  // }
-
   const deleteUser = (user: User) => {
     const originalUsers = [...users];
     setUsers(users.filter((u) => u.id !== user.id));
-
-    apiClient.delete('/users' + '/users.id').catch((err) => {
+    apiClient.delete('/users/' + user.id).catch((err) => {
       setError(err.message);
       setUsers(originalUsers);
     });
@@ -48,12 +42,11 @@ function App() {
       try {
         const formattedName = capitalizeWords(newUserName);
         const newUser: User = { id: uuidv4(), name: formattedName }; // Make sure that newUser complies with the User interface
-        console.log(newUser); 
+        console.log(newUser);
         setUsers([newUser, ...users]);
-
         // Call to the server to save changes
         const { data: savedUser } = await apiClient.post('/users', newUser);
-        setUsers([savedUser, ...users]);
+        setUsers([savedUser, ...originalUsers]); // Use originalUsers to avoid duplication
         setNewUserName(''); // Clear the input field after adding the user
       } catch (err) {
         setError((err as AxiosError).message);
@@ -73,8 +66,7 @@ function App() {
     const updatedUser = { ...user, name: `${user.name} 🐱 Well done!` };
     try {
       setUsers(users.map((u) => (u.id === user.id ? updatedUser : u)));
-
-      await apiClient.patch('/users' + '/users.id', updatedUser);
+      await apiClient.patch('/users/' + user.id, updatedUser);
     } catch (err) {
       setError((err as AxiosError).message);
       setUsers(originalUsers);
