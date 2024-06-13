@@ -3,11 +3,12 @@ import { MdOutlineUpdate } from 'react-icons/md';
 import apiClient, {
   AxiosError,
 } from './components/6-Connecting-Backend/services/api-client';
+import { v4 as uuidv4 } from 'uuid';
 
 import useUsers from './components/6-Connecting-Backend/hooks/useUsers';
 
 interface User {
-  id: number;
+  id: string;
   name: string;
 }
 
@@ -42,21 +43,22 @@ function App() {
   };
 
   const addUser = async () => {
-    if (!newUserName.trim()) return;
+    if (newUserName.trim() !== '') {
+      const originalUsers = [...users];
+      try {
+        const formattedName = capitalizeWords(newUserName);
+        const newUser: User = { id: uuidv4(), name: formattedName }; // Make sure that newUser complies with the User interface
+        console.log(newUser); 
+        setUsers([newUser, ...users]);
 
-    const originalUsers = [...users];
-    try {
-      const formattedName = capitalizeWords(newUserName);
-      const newUser = { id: users.length + 1, name: formattedName };
-      setUsers([newUser, ...users]);
-
-      // It is needed to call the server to save the changes
-      const { data: savedUser } = await apiClient.post('/users', newUser);
-      setUsers([savedUser, ...users]);
-      setNewUserName(''); // Clear the input field after adding the user
-    } catch (err) {
-      setError((err as AxiosError).message);
-      setUsers(originalUsers);
+        // Call to the server to save changes
+        const { data: savedUser } = await apiClient.post('/users', newUser);
+        setUsers([savedUser, ...users]);
+        setNewUserName(''); // Clear the input field after adding the user
+      } catch (err) {
+        setError((err as AxiosError).message);
+        setUsers(originalUsers);
+      }
     }
   };
 

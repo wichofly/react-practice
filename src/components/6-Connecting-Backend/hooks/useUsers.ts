@@ -3,7 +3,7 @@ import apiClient, { AxiosError, CanceledError } from '../services/api-client';
 
 interface User {
   name: string;
-  id: number;
+  id: string;
 }
 
 const useUsers = () => {
