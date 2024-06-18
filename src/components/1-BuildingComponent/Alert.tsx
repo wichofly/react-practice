@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface Props {
-  children: ReactNode; // it is possible to pass HTML content to alert component in App.tsx
+  children: ReactNode; // Using ReactNode it is possible to pass HTML content to alert component in App.tsx || <Alert>Hello <span>World</span></Alert>
   onClose: () => void
 }
 
